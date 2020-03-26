@@ -1,0 +1,12 @@
+{
+  "name": "typescript-basic",
+  "version": "1.0.0",
+  "description": "typescript自主学习，实例代码。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "JefferyXiang",
+  "license": "ISC"
+}
