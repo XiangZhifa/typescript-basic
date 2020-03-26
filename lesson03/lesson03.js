@@ -149,7 +149,7 @@ var HuskyDog = /** @class */ (function (_super) {
         return _this;
     }
     ;
-    //抽象类的子类必须实现抽象类中的抽象方法
+    //抽象类的子类 必须实现 抽象类中的抽象方法
     HuskyDog.prototype.eat = function () {
         console.log(this.name + ' eat meat');
     };

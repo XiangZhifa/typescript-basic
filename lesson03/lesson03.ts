@@ -162,7 +162,7 @@ class HuskyDog extends Dog {
         this.name = name;
     };
 
-    //抽象类的子类必须实现抽象类中的抽象方法
+    //抽象类的子类 必须实现 抽象类中的抽象方法
     eat() {
         console.log(this.name+' eat meat')
     }
