@@ -49,6 +49,6 @@ function run(): void {
 }
 
 //never类型，代表从不会出现的值
-let errData: never = (() => {
+let errInfo: never = (() => {
     throw new Error('错误！');
 })();

@@ -43,6 +43,6 @@ function run() {
     console.log('running'); //方法没有返回值，有返回值的话，要返回正确的类型
 }
 //never类型，代表从不会出现的值
-var errData = (function () {
+var errInfo = (function () {
     throw new Error('错误！');
 })();
