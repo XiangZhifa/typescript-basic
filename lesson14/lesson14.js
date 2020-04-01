@@ -24,8 +24,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 function noParams(source) {
     //source是指装饰器作用的来源类，class HttpClient
     console.log(source);
-    source.apiUrl = '装饰器拓展的属性';
-    source.run = function () {
+    source.prototype.apiUrl = '装饰器拓展的属性';
+    source.prototype.run = function () {
         console.log('装饰器拓展的run方法');
     };
 }
@@ -36,7 +36,7 @@ function paramsFactory(params) {
         //source是指装饰器作用的来源类，class HttpClient
         console.log(source);
         console.log(params);
-        source.paramsFactory = params;
+        source.prototype.paramsFactory = params;
     };
 }
 //类装饰器重载构造函数
@@ -86,9 +86,8 @@ var HttpClient = /** @class */ (function () {
     return HttpClient;
 }());
 var httpClient = new HttpClient();
-console.log(httpClient);
-console.log(httpClient.apiUrl);
-httpClient.run();
-console.log(httpClient.paramsFactory);
+console.log(httpClient["apiUrl"]);
+httpClient["run"]();
+console.log(httpClient["paramsFactory"]);
 httpClient.getData();
 console.log(httpClient.attr);
