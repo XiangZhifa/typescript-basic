@@ -1,3 +1,4 @@
+"use strict";
 var md5 = function (key, value) {
     return key + " : " + value;
 };

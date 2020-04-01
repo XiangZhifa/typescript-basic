@@ -1,3 +1,4 @@
+"use strict";
 //定义一个操作MySQL数据库的类      ！！！注意：要实现一个泛型接口，类也应该是一个泛型类
 var MySQLDb = /** @class */ (function () {
     function MySQLDb() {
@@ -10,7 +11,7 @@ var MySQLDb = /** @class */ (function () {
         console.log(data, id);
         return true;
     };
-    MySQLDb.prototype["delete"] = function (id) {
+    MySQLDb.prototype.delete = function (id) {
         console.log(id);
         return true;
     };
@@ -32,7 +33,7 @@ var MSSQLDb = /** @class */ (function () {
         console.log(data, id);
         return true;
     };
-    MSSQLDb.prototype["delete"] = function (id) {
+    MSSQLDb.prototype.delete = function (id) {
         console.log(id);
         return true;
     };

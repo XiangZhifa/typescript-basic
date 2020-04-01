@@ -1,3 +1,4 @@
+"use strict";
 /**
  * ts装饰器
  * 类装饰器，属性装饰器，装饰器工厂
@@ -23,8 +24,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 function noParams(source) {
     //source是指装饰器作用的来源类，class HttpClient
     console.log(source);
-    source.prototype.apiUrl = '装饰器拓展的属性';
-    source.prototype.run = function () {
+    source.apiUrl = '装饰器拓展的属性';
+    source.run = function () {
         console.log('装饰器拓展的run方法');
     };
 }
@@ -35,7 +36,7 @@ function paramsFactory(params) {
         //source是指装饰器作用的来源类，class HttpClient
         console.log(source);
         console.log(params);
-        source.prototype.paramsFactory = params;
+        source.paramsFactory = params;
     };
 }
 //类装饰器重载构造函数
@@ -76,7 +77,7 @@ var HttpClient = /** @class */ (function () {
     };
     __decorate([
         attrParams('https://www.baidu.com')
-    ], HttpClient.prototype, "attr");
+    ], HttpClient.prototype, "attr", void 0);
     HttpClient = __decorate([
         noParams,
         paramsFactory('装饰器工厂'),
@@ -85,8 +86,9 @@ var HttpClient = /** @class */ (function () {
     return HttpClient;
 }());
 var httpClient = new HttpClient();
-console.log(httpClient['apiUrl']);
-httpClient['run']();
-console.log(httpClient['paramsFactory']);
+console.log(httpClient);
+console.log(httpClient.apiUrl);
+httpClient.run();
+console.log(httpClient.paramsFactory);
 httpClient.getData();
 console.log(httpClient.attr);

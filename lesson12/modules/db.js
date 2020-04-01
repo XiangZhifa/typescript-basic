@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var dbUrl = 'this is db_url';
 exports.dbUrl = dbUrl;
 function getData() {

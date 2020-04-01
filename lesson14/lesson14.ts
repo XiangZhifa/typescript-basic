@@ -9,8 +9,8 @@
 function noParams(source: any) {
     //source是指装饰器作用的来源类，class HttpClient
     console.log(source);
-    source.prototype.apiUrl = '装饰器拓展的属性';
-    source.prototype.run = () => {
+    source.apiUrl = '装饰器拓展的属性';
+    source.run = () => {
         console.log('装饰器拓展的run方法');
     }
 }
@@ -22,7 +22,7 @@ function paramsFactory(params: string) {
         //source是指装饰器作用的来源类，class HttpClient
         console.log(source);
         console.log(params);
-        source.prototype.paramsFactory = params;
+        source.paramsFactory = params;
     }
 }
 
@@ -32,7 +32,7 @@ function paramsFactory(params: string) {
 function reConstructor(source: any) {
     return class extends source {
         constro: string = '这是 装饰器 重载构造函数后 赋值的 constro 属性';
-        attr: string;
+        attr: string|undefined;
 
         getData() {
             console.log(this.constro);
@@ -61,7 +61,7 @@ function attrParams(params: any) {
 class HttpClient {
     public constro: string;
     @attrParams('https://www.baidu.com')
-    public attr: string;
+    public attr: string|undefined;
 
     constructor() {
         this.constro = '这是 类本身 的构造函数赋值的 constro 属性';
@@ -73,8 +73,9 @@ class HttpClient {
 }
 
 let httpClient = new HttpClient();
-console.log(httpClient['apiUrl']);
-httpClient['run']();
-console.log(httpClient['paramsFactory']);
+console.log(httpClient);
+console.log(httpClient.apiUrl);
+httpClient.run();
+console.log(httpClient.paramsFactory);
 httpClient.getData();
 console.log(httpClient.attr);

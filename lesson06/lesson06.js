@@ -1,3 +1,4 @@
+"use strict";
 //可索引接口  约束 数组 和 对象 的接口（不常用）
 var arr = ['1', '2', '3'];
 var infos = { name: 'Jeffery' };
