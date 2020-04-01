@@ -20,64 +20,73 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 //1.类装饰器，在类声明之前被声明，应用于类的构造函数，用来监视、替换和修改类的定义
 //无参装饰器
-function logClass(params) {
-    //params就是当前类
-    params.prototype.apiUrl = 'apiUrl';
-    params.prototype.run = function () {
-        console.log('Run Function');
+function noParams(source) {
+    //source是指装饰器作用的来源类，class HttpClient
+    console.log(source);
+    source.prototype.apiUrl = '装饰器拓展的属性';
+    source.prototype.run = function () {
+        console.log('装饰器拓展的run方法');
     };
 }
-//装饰器工厂：可传参的装饰器
-function paramsClass(params) {
-    return function (target) {
-        //target就是当前类
+//装饰器工厂(可传参装饰器)
+function paramsFactory(params) {
+    //params是传入的参数
+    return function (source) {
+        //source是指装饰器作用的来源类，class HttpClient
+        console.log(source);
         console.log(params);
+        source.prototype.paramsFactory = params;
     };
 }
-//通过类装饰器，修改构造函数
-function constructorClass(params) {
-    //params就是当前类
-    console.log(params);
+//类装饰器重载构造函数
+//类装饰器会在运行时被当做函数调用，类的构造函数是其唯一参数
+//如果类装饰器返回一个值，它会使用 提供的构造函数 来替换 类声明的构造函数
+function reConstructor(source) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
         function class_1() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            //重载构造函数
-            _this.name = '我是修改后的name';
+            _this.constro = '这是 装饰器 重载构造函数后 赋值的 constro 属性';
             return _this;
         }
         class_1.prototype.getData = function () {
+            console.log(this.constro);
         };
         return class_1;
-    }(params));
+    }(source));
 }
 //2.属性装饰器
-//属性装饰器接收两个参数，原型对象 和 成员名称
-function attributeClass(params) {
-    //target 是 原型对象；attribute 是 成员名称
-    return function (target, attribute) {
-        console.log(target);
-        console.log(attribute);
+//属性装饰器会在运行时被当做函数调用，传入两个参数
+//params1:装饰器作用的类，class HttpClient
+//params2:属性名称
+function attrParams(params) {
+    return function (source, attr) {
+        //source:装饰器作用的类，class HttpClient
+        //attr:属性名称
+        console.log('attr:  ' + attr);
+        source.attr = '属性装饰器 赋值后的 attr';
     };
 }
 var HttpClient = /** @class */ (function () {
     function HttpClient() {
-        this.name = '我是原name';
-        this.attribute = 'attribute';
+        this.constro = '这是 类本身 的构造函数赋值的 constro 属性';
     }
     HttpClient.prototype.getData = function () {
+        console.log(this.constro);
     };
     __decorate([
-        attributeClass('属性装饰器')
-    ], HttpClient.prototype, "name", void 0);
+        attrParams('https://www.baidu.com')
+    ], HttpClient.prototype, "attr");
     HttpClient = __decorate([
-        logClass,
-        paramsClass('http://localhost:8080/'),
-        constructorClass
+        noParams,
+        paramsFactory('装饰器工厂'),
+        reConstructor
     ], HttpClient);
     return HttpClient;
 }());
 var httpClient = new HttpClient();
-httpClient.run();
-console.log(httpClient.apiUrl);
-console.log(httpClient.name);
+console.log(httpClient['apiUrl']);
+httpClient['run']();
+console.log(httpClient['paramsFactory']);
+httpClient.getData();
+console.log(httpClient.attr);

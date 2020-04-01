@@ -6,66 +6,75 @@
 //1.类装饰器，在类声明之前被声明，应用于类的构造函数，用来监视、替换和修改类的定义
 
 //无参装饰器
-function logClass(params: any) {
-    //params就是当前类
-    params.prototype.apiUrl = 'apiUrl';
-    params.prototype.run = () => {
-        console.log('Run Function')
-    };
-}
-
-//装饰器工厂：可传参的装饰器
-function paramsClass(params: string) {
-    return (target: any) => {
-        //target就是当前类
-        console.log(params);
+function noParams(source: any) {
+    //source是指装饰器作用的来源类，class HttpClient
+    console.log(source);
+    source.prototype.apiUrl = '装饰器拓展的属性';
+    source.prototype.run = () => {
+        console.log('装饰器拓展的run方法');
     }
 }
 
-//通过类装饰器，修改构造函数
-function constructorClass(params: any) {
-    //params就是当前类
-    console.log(params);
-    return class extends params {
-        //重载构造函数
-        name: string = '我是修改后的name';
+//装饰器工厂(可传参装饰器)
+function paramsFactory(params: string) {
+    //params是传入的参数
+    return (source: any) => {
+        //source是指装饰器作用的来源类，class HttpClient
+        console.log(source);
+        console.log(params);
+        source.prototype.paramsFactory = params;
+    }
+}
+
+//类装饰器重载构造函数
+//类装饰器会在运行时被当做函数调用，类的构造函数是其唯一参数
+//如果类装饰器返回一个值，它会使用 提供的构造函数 来替换 类声明的构造函数
+function reConstructor(source: any) {
+    return class extends source {
+        constro: string = '这是 装饰器 重载构造函数后 赋值的 constro 属性';
+        attr: string;
 
         getData() {
-
+            console.log(this.constro);
         }
-    };
-}
-
-//2.属性装饰器
-//属性装饰器接收两个参数，原型对象 和 成员名称
-function attributeClass(params: any) {
-    //target 是 原型对象；attribute 是 成员名称
-    return function (target: any, attribute) {
-        console.log(target);
-        console.log(attribute);
     }
 }
 
 
-@logClass
-@paramsClass('http://localhost:8080/')
-@constructorClass
+//2.属性装饰器
+
+//属性装饰器会在运行时被当做函数调用，传入两个参数
+//params1:装饰器作用的类，class HttpClient
+//params2:属性名称
+function attrParams(params: any) {
+    return (source: any, attr: any) => {
+        //source:装饰器作用的类，class HttpClient
+        //attr:属性名称
+        console.log('attr:  ' + attr);
+        source.attr = '属性装饰器 赋值后的 attr';
+    }
+}
+
+@noParams
+@paramsFactory('装饰器工厂')
+@reConstructor
 class HttpClient {
-    @attributeClass('属性装饰器')
-    name: string;
-    attribute: any;
+    public constro: string;
+    @attrParams('https://www.baidu.com')
+    public attr: string;
 
     constructor() {
-        this.name = '我是原name';
-        this.attribute = 'attribute';
+        this.constro = '这是 类本身 的构造函数赋值的 constro 属性';
     }
 
     getData() {
-
+        console.log(this.constro);
     }
 }
 
 let httpClient = new HttpClient();
-httpClient.run();
-console.log(httpClient.apiUrl);
-console.log(httpClient.name);
+console.log(httpClient['apiUrl']);
+httpClient['run']();
+console.log(httpClient['paramsFactory']);
+httpClient.getData();
+console.log(httpClient.attr);

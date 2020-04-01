@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 /**
  * ts中的命名空间化
  * 为了避免多人操作时，出现命名冲突的情况

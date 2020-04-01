@@ -10,7 +10,7 @@ var MySQLDb = /** @class */ (function () {
         console.log(data, id);
         return true;
     };
-    MySQLDb.prototype.delete = function (id) {
+    MySQLDb.prototype["delete"] = function (id) {
         console.log(id);
         return true;
     };
@@ -32,7 +32,7 @@ var MSSQLDb = /** @class */ (function () {
         console.log(data, id);
         return true;
     };
-    MSSQLDb.prototype.delete = function (id) {
+    MSSQLDb.prototype["delete"] = function (id) {
         console.log(id);
         return true;
     };
